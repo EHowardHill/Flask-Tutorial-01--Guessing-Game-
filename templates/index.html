@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title>Flask Example</title>
+
+    <!-- Basic CSS -->
+    <style>
+        div {
+            margin: 12px;
+        }
+    </style>
+</head>
+
+<!-- The main HTML elements -->
+
+<body>
+    <div id="status">Guess a number between 0 and 99:</div>
+    <input id="number_input" type="number"></input>
+    <button onclick="submit()">Submit</button>
+</body>
+
+<!-- Your code logic (JavaScript) -->
+<script>
+    async function submit() {
+        let number = document.getElementById("number_input").value;
+
+        const response = await fetch("/guess", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({ "guessed_number": number })
+        });
+        const json = await response.json();
+
+        document.getElementById("status").textContent = json["answer"];
+    }
+</script>
+
+</html>
